@@ -4,9 +4,9 @@
 if (!Clipboard) {
   throw new Error('you should npm install `clipboard` --save at first ')
 }
-// 默认复制成功提示 UI库为vant
+// 默认复制成功提示 UI库为element
 // const clipboardSuccess = () => {
-//   Vue.prototype.$toast({
+//   Vue.prototype.$message({
 //     message: 'Copy successfully',
 //     type: 'success',
 //     duration: 500,
@@ -14,7 +14,7 @@ if (!Clipboard) {
 // }
 // 默认复制失败提示  UI库为element
 // const clipboardError = () => {
-//   Vue.prototype.$toast({
+//   Vue.prototype.$message({
 //     message: 'Copy failed',
 //     type: 'error',
 //     duration: 500,
