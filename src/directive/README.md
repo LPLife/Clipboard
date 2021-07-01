@@ -19,7 +19,7 @@ import '@/directive/index';
 </button>
 ```
 
-- vue methods
+- vue methods 可选
 
 ```JavaScript
 clipboardSuccess() {
