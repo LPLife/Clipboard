@@ -52,9 +52,15 @@ const clipboardError = () => {
     type: 'error'
   })
 }
-//update中加入
-el._v_clipboard_success = clipboardSuccess;
-el._v_clipboard_error = clipboardError;
+//bind中加入 设置默认提示 具备较强侵入性，视情况更改为项目引入的，如果不设置
+clipboard.on('success', e => {
+  const callback = el._v_clipboard_success || clipboardSuccess();
+  callback && callback(e) // eslint-disable-line
+})
+clipboard.on('error', e => {
+  const callback = el._v_clipboard_error || clipboardError();
+  callback && callback(e) // eslint-disable-line
+})
 ```
 
 ***
