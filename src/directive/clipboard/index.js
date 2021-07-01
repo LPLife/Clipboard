@@ -23,7 +23,6 @@ if (!Clipboard) {
 
 export default {
   bind(el, binding) {
-    console.log(binding);
     if (binding.arg === 'success') {
       el._v_clipboard_success = binding.value
     } else if (binding.arg === 'error') {
@@ -49,7 +48,6 @@ export default {
     }
   },
   update(el, binding) {
-    console.log('更新', binding);
     if (binding.arg === 'success') {
       el._v_clipboard_success = binding.value
     } else if (binding.arg === 'error') {
