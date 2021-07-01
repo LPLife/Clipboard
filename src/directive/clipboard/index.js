@@ -34,11 +34,15 @@ export default {
         action() { return binding.arg === 'cut' ? 'cut' : 'copy' }
       })
       clipboard.on('success', e => {
-        const callback = el._v_clipboard_success
+        // 设置默认提示 具备较强侵入性，视情况更改为项目引入的，如果不设置
+        // const callback = el._v_clipboard_success || clipboardSuccess();
+        const callback = el._v_clipboard_success;
         callback && callback(e) // eslint-disable-line
       })
       clipboard.on('error', e => {
-        const callback = el._v_clipboard_error
+        // 设置默认提示 具备较强侵入性，视情况更改为项目引入的，如果不设置
+        // const callback = el._v_clipboard_error || clipboardError();
+        const callback = el._v_clipboard_error;
         callback && callback(e) // eslint-disable-line
       })
       el._v_clipboard = clipboard
@@ -51,10 +55,6 @@ export default {
     } else if (binding.arg === 'error') {
       el._v_clipboard_error = binding.value
     } else {
-      // 设置默认提示 具备较强侵入性，视情况更改为项目引入的，如果不设置
-      // el._v_clipboard_success = clipboardSuccess;
-      // el._v_clipboard_error = clipboardError;
-
       el._v_clipboard.text = function () { return binding.value }
       el._v_clipboard.action = function () { return binding.arg === 'cut' ? 'cut' : 'copy' }
     }
