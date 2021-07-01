@@ -1,70 +1,69 @@
 // Inspired by https://github.com/Inndy/vue-clipboard2
-// import Vue from 'vue'
-
-const Clipboard = require('clipboard')
+// import Vue from 'vue';
+// const Clipboard = require('clipboard')
 if (!Clipboard) {
   throw new Error('you should npm install `clipboard` --save at first ')
 }
-// 默认复制成功提示 UI库为element
+// 默认复制成功提示 UI库为vant
 // const clipboardSuccess = () => {
-//   Vue.prototype.$message({
+//   Vue.prototype.$toast({
 //     message: 'Copy successfully',
 //     type: 'success',
-//     duration: 1500
+//     duration: 500,
 //   })
 // }
-// // 默认复制失败提示  UI库为element
+// 默认复制失败提示  UI库为element
 // const clipboardError = () => {
-//   Vue.prototype.$message({
+//   Vue.prototype.$toast({
 //     message: 'Copy failed',
-//     type: 'error'
+//     type: 'error',
+//     duration: 500,
 //   })
 // }
 
 export default {
-  bind(el, binding) {
+  bind: function (el, binding, vnode) {
     if (binding.arg === 'success') {
-      el._v_clipboard_success = binding.value
+      el._vClipboard_success = binding.value
     } else if (binding.arg === 'error') {
-      el._v_clipboard_error = binding.value
+      el._vClipboard_error = binding.value
     } else {
-      const clipboard = new Clipboard(el, {
-        text() { return binding.value },
-        action() { return binding.arg === 'cut' ? 'cut' : 'copy' }
+      let clipboard = new Clipboard(el, {
+        text: function () { return binding.value },
+        action: function () { return binding.arg === 'cut' ? 'cut' : 'copy' },
       })
-      clipboard.on('success', e => {
-        // 设置默认提示 具备较强侵入性，视情况更改为项目引入的，如果不设置
-        // const callback = el._v_clipboard_success || clipboardSuccess();
-        const callback = el._v_clipboard_success;
-        callback && callback(e) // eslint-disable-line
+      clipboard.on('success', function (e) {
+        // let callback = el._vClipboard_success || clipboardSuccess();
+        let callback = el._vClipboard_success;
+
+        callback && callback(e)
       })
-      clipboard.on('error', e => {
-        // 设置默认提示 具备较强侵入性，视情况更改为项目引入的，如果不设置
-        // const callback = el._v_clipboard_error || clipboardError();
-        const callback = el._v_clipboard_error;
-        callback && callback(e) // eslint-disable-line
+      clipboard.on('error', function (e) {
+        // let callback = el._vClipboard_error || clipboardError();
+        let callback = el._vClipboard_error;
+        callback && callback(e)
       })
-      el._v_clipboard = clipboard
+      el._vClipboard = clipboard
     }
   },
-  update(el, binding) {
+  update: function (el, binding) {
     if (binding.arg === 'success') {
-      el._v_clipboard_success = binding.value
+      el._vClipboard_success = binding.value
     } else if (binding.arg === 'error') {
-      el._v_clipboard_error = binding.value
+      el._vClipboard_error = binding.value
     } else {
-      el._v_clipboard.text = function () { return binding.value }
-      el._v_clipboard.action = function () { return binding.arg === 'cut' ? 'cut' : 'copy' }
+      el._vClipboard.text = function () { return binding.value }
+      el._vClipboard.action = function () { return binding.arg === 'cut' ? 'cut' : 'copy' }
     }
   },
-  unbind(el, binding) {
+  unbind: function (el, binding) {
     if (binding.arg === 'success') {
-      delete el._v_clipboard_success
+      delete el._vClipboard_success
     } else if (binding.arg === 'error') {
-      delete el._v_clipboard_error
+      delete el._vClipboard_error
     } else {
-      el._v_clipboard.destroy()
-      delete el._v_clipboard
+      el._vClipboard.destroy()
+      delete el._vClipboard
     }
-  }
+  },
 }
